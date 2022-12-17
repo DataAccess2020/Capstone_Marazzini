@@ -68,14 +68,8 @@ uni_Grd <- str_c(Grd[1], Grd[2], Grd[3], Grd[4], Grd[5], Grd[6], Grd[7], Grd[8],
 view(uni_Grd)
 
 
-#download text WashingtonPost----
-w <- read_html("https://www.washingtonpost.com/world/2022/09/25/italy-election-results-meloni-right/")
-   html_elements(css = ".font-copy , #main-content span")
 
-wp <- html_text(w, trim = FALSE)
-view(wp)
-
-dat <- data.frame(
+ dat <- data.frame(
   var1 = c("BBC", "NYT", "CNN", "Guardian", "WP"), 
   var2 = c(uni_BBC, uni_NYT, uni_CNN, uni_Grd, wp)
 )

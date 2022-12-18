@@ -69,10 +69,13 @@ uni_Grd <- str_c(Grd[1], Grd[2], Grd[3], Grd[4], Grd[5], Grd[6], Grd[7], Grd[8],
 view(uni_Grd)
 
 
-
+#create a dataframe
  dat <- data.frame(
   var1 = c("BBC", "NYT", "CNN", "Guardian"), 
   var2 = c(uni_BBC, uni_NYT, uni_CNN, uni_Grd)
 )
 dat
 view(dat)
+
+#create a vector
+vector <- c(uni_BBC, uni_CNN, uni_Grd, uni_NYT)

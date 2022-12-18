@@ -5,6 +5,7 @@ library(RColorBrewer)
 install.packages("tm")
 library(tm)
 
+#create a dataframe eliminating the useless words and putting the frequency
 docs <- Corpus(VectorSource(vector))
 
 docs <- docs %>%
@@ -19,7 +20,7 @@ matrix <- as.matrix(dtm)
 words <- sort(rowSums(matrix),decreasing=TRUE) 
 df <- data.frame(word = names(words),freq=words) #data frame with words and frequency
 
-
+#wordcloud
 install.packages("wordcloud2")
 library(wordcloud2)
 

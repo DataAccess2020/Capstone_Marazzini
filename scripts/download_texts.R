@@ -9,6 +9,7 @@ library(curl)
 library(here)
 library(stringr)
 library(RCurl)
+library(dplyr)
 
 #download text BBC----
 url <- "https://www.bbc.com/news/world-europe-63029909"
@@ -70,8 +71,8 @@ view(uni_Grd)
 
 
  dat <- data.frame(
-  var1 = c("BBC", "NYT", "CNN", "Guardian", "WP"), 
-  var2 = c(uni_BBC, uni_NYT, uni_CNN, uni_Grd, wp)
+  var1 = c("BBC", "NYT", "CNN", "Guardian"), 
+  var2 = c(uni_BBC, uni_NYT, uni_CNN, uni_Grd)
 )
 dat
 view(dat)

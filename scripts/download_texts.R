@@ -10,6 +10,7 @@ library(here)
 library(stringr)
 library(RCurl)
 library(dplyr)
+library(tidytext)
 
 #download text BBC----
 url <- "https://www.bbc.com/news/world-europe-63029909"

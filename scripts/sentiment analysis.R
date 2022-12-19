@@ -39,25 +39,62 @@ neg_text <- df %>%
 #80 words 
 
 #COMPARISON POSITIVE/NEGATIVE
-bing <- get_sentiments("bing")
+#To see how the sentiment evolves in each article, I want to create a dataframe in which each
+#words is assigned to the corrispondent Article
+df_bbc$source <- ifelse(df_bbc$freq > 0, "BBC", df_bbc$source)
+df_cnn$source <- ifelse(df_cnn$freq > 0, "CNN", df_cnn$source)
+df_grd$source <- ifelse(df_grd$freq > 0, "GRD", df_grd$source)
+df_nyt$source <- ifelse(df_nyt$freq > 0, "NYT", df_nyt$source)
 
-pos_neg <- df %>%
+#I put them in a single dataframe
+complete_dat <- data.frame(
+  word = c(df_bbc$word, df_cnn$word, df_grd$word, df_nyt$word), 
+  freq = c(df_bbc$freq, df_cnn$freq, df_grd$freq, df_nyt$freq),
+  source = c(df_bbc$source, df_cnn$source, df_grd$source, df_nyt$source)
+)
+complete_dat
+view(complete_dat)
+
+install.packages("tidyr")
+library(tidyr)
+
+xxxxxxxx <- complete_dat %>%
   inner_join(bing) %>%
   count(word, sentiment, sort = TRUE)
 
-pos_neg
-
-pos_neg %>%
-  filter(n >= 1) %>%
+xxxxxxxx %>%
+  filter(n >= 2) %>%
   mutate(n = ifelse(sentiment == "negative", -n, n)) %>%
   mutate(word = reorder(word, n)) %>%
   ggplot(aes(word, n, fill = sentiment)) +
   geom_col() +
   coord_flip() +
   labs(y = "Contribution to sentiment")
-#It doesn't make sense to use this graph because each words that is in the dictionary
-#and in the articles appears just one time
 
+xxxxxxxx %>%
+  group_by(sentiment) %>%
+  slice_max(n, n = 2) %>% 
+  ungroup() %>%
+  mutate(word = reorder(word, n)) %>%
+  ggplot(aes(n, word, fill = sentiment)) +
+  geom_col(show.legend = FALSE) +
+  facet_wrap(~sentiment, scales = "free_y") +
+  labs(x = "Contribution to sentiment",
+       y = NULL)
+
+#the following formula I'm still evaluating if it makes sense to analyze it
+articlesentiment <- complete_dat %>%
+  inner_join(bing) %>%
+  count(source, index = freq, sentiment) %>%
+  pivot_wider(names_from = sentiment, values_from = n, values_fill = 0) %>% 
+  mutate(sentiment = positive - negative)
+
+ggplot(articlesentiment, aes(index, sentiment, fill = source)) +
+  geom_col(show.legend = FALSE) +
+  facet_wrap(~source, ncol = 2, scales = "free_x")
+
+
+#-----------------------------------------------------------------------------------------------------
 install.packages("transforEmotion")
 library(transforEmotion)
 

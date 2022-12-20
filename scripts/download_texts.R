@@ -11,6 +11,7 @@ library(stringr)
 library(RCurl)
 library(dplyr)
 library(tidytext)
+library(ggplot2)
 
 #download text BBC----
 url <- "https://www.bbc.com/news/world-europe-63029909"

@@ -61,7 +61,8 @@ view(uni_CNN)
 
 #download text Guardian----
 r <- read_html("https://www.theguardian.com/world/2022/sep/25/italy-elections-exit-polls-point-to-victory-for-coalition-led-by-far-right-giorgia-meloni") %>%
-  html_elements(css = ".dcr-2v2zi4 , .dcr-ai6lo6 p , .dcr-6rhr0p")
+  html_elements(css = "p , .dcr-y70mar")
+head(r)
 
 Grd <- html_text(r, trim = FALSE)
 view(Grd)

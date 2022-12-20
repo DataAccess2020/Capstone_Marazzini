@@ -58,6 +58,8 @@ view(complete_dat)
 install.packages("tidyr")
 library(tidyr)
 
+bing <- get_sentiments("bing")
+
 xxxxxxxx <- complete_dat %>%
   inner_join(bing) %>%
   count(word, sentiment, sort = TRUE)

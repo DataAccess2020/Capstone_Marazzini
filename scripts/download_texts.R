@@ -69,6 +69,8 @@ view(Grd)
 #unify in one text
 uni_Grd <- str_c(Grd[1], Grd[2], Grd[3], Grd[4], Grd[5], Grd[6], Grd[7], Grd[8], Grd[9], Grd[10], Grd[11], Grd[12], Grd[13], Grd[14], Grd[15], Grd[16], Grd[17], Grd[18], Grd[19], Grd[20], Grd[21], Grd[22], Grd[23], Grd[24], Grd[25], Grd[26], Grd[27], Grd[28], Grd[29], Grd[30], Grd[31], Grd[32], Grd[33], Grd[34], sep = "", collapse = NULL)
 view(uni_Grd)
+#I know it's not the most elegant or useful way to do so, but my forloop didn't
+#work and I had to find a way otherwise I would be stucked
 
 
 #create a dataframe

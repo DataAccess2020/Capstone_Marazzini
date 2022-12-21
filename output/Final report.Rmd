@@ -9,19 +9,19 @@ output: html_document
 
 ## INTRODUCTION
 
-How was the victory of Giorgia Meloni depicted by the foreign press? it is well known that after Giorgia Meloni's victory in the elections many journalists launched into scandalous and exaggerated headlines, going so far as to liken the Fratelli di Italia party and its leader to fascism and Mussolini. The following study aims to analyze the sentiment of the foreign press regarding Meloni's election victory.
+How was the victory of Giorgia Meloni depicted by the foreign press? It is well known that after Giorgia Meloni's victory in the elections many journalists wrote scandalous and exaggerated headlines, going so far as to liken the Fratelli di Italia party and its leader to fascism and Mussolini. The following study aims to analyze the sentiment of the foreign press regarding Meloni's election victory.
 
 ### Method
 
-To pursue this objective, articles about the premier's victory published on Sept. 26 by the BBC, CNN, New York Times and The Guardian were analyzed. These articles were chosen because they were the first articles from major news outlets that resulted from the query "Giorgia Meloni won the election," meaning that they were probably the most read articles associated with this query.
+To pursue this objective, articles about the premier's victory published on Sept. 26 by the BBC, CNN, New York Times and The Guardian were analyzed. These articles were chosen because they were the first articles from major journals that resulted from the query "Giorgia Meloni won the election," meaning that, according to the SEO principles, they were probably the most read articles associated with this query.
 
-Sentiment analysis was conducted on a word-level, meaning that the texts were fragmented and analyzed on the basis of individual words, operating a generic analysis and a more specific one on each newspaper, performing a comparison between the four different sources. It should also be specified that a lexicon-based method was used, focusing on the creation of positive and negative word lists.
+Sentiment analysis was conducted on a word-level, meaning that the texts were fragmented and analyzed on the basis of individual words, operating both a generic analysis and a more specific one on each newspaper, performing a comparison between the four different sources. It should also be specified that a lexicon-based method was used, focusing on the creation of positive and negative word lists.
 
 # DEVELOPMENT OF THE PROJECT
 
 ## Scraping and download of the texts
 
-To achieve my goal, as first thing I needed to scrape the text of the articles from the web. So, I firstly checked the robots.txt on the websites and, as I saw that I could download the texts, I sarted to open all the packages I thought I would need for my report:
+To achieve my goal, as first thing I needed to scrape the text of the articles from the web. So, I firstly checked the robots.txt on the websites and, as I saw that I could download the texts, I started to open all the packages I thought I would need for my report:
 
 ```{r}
 #preparation
@@ -36,9 +36,10 @@ library(dplyr)
 library(tidytext)
 library(ggplot2)
 library(tidyr)
+library(transforEmotion)
 ```
 
-Then, I proceeded with the download of the text. Since the sentences were put in as different variables, I unified them in a unique text.
+Then, I proceeded with the download of the texts. Since the sentences were put in as different variables, I unified them in a unique text.
 
 ```{r}
 #DOWNLOAD BBC
@@ -234,7 +235,7 @@ The graphs did not display particular differences in the usage of the most commo
 
 For the sentiment analysis I used overall two packages: `tidytext` and `transforEmotion`.
 
-As first thing I wanted to understand if the general sentiment was positive or negative. To accomplish this, I had to choose the method and the vocabulary to evaluate the emotions present in the text. I chose the Bing Liu and collaborators corpus, which is already provided in the package `tidytext` and which assigns a positive or negative value for each word present in the dictionary. 
+As first thing I wanted to understand if the general sentiment was positive or negative. To accomplish this, I had to choose the method and the vocabulary to evaluate the emotions present in the text. I chose the Bing Liu and collaborators corpus, which is already provided in the package `tidytext` and which assigns a positive or negative value for each word present in the dictionary.
 
 ```{r}
 positive <- get_sentiments("bing") %>%
@@ -254,7 +255,8 @@ neg_text <- df %>%
   count(word, sort = TRUE)
 #80 words 
 ```
-To get the negative and positive words, I first extrapolated from the Bing dictionary all the words with a positive or negative meaning and then I extracted these words from the journal texts to see how many positive or negative words there were. The results show that in our corpus there are 84 positive words against 80 negative words. As a consequence, since there is no huge difference between positive and negative words, the sentiment of the article can be considered quite neutral. 
+
+To get the negative and positive words, I first extrapolated from the Bing dictionary all the words with a positive or negative meaning and then I extracted these words from the journal texts to see how many positive or negative words there were. The results show that in our corpus there are 84 positive words against 80 negative words. As a consequence, since there is no huge difference between positive and negative words, the sentiment of the article can be considered quite neutral.
 
 To visually display the differences of the positive and negative words, i want to create a data frame also with the column "source" adding from which article the words come from:
 
@@ -295,7 +297,14 @@ xxxxxxxx %>%
   coord_flip() +
   labs(y = "Contribution to sentiment")
 ```
-ANALYSES OF THE PREVIOUS GRAPH
+
+By a quick overview of the previous graph, we can notice that there are more positive words than the negative ones and that their impact on the contribution to the sentiment is higher.
+
+Most of the the words that arise the level of positivity of the text are linked with the theme of the victory: in fact, we can find terms like *victory*, *won*, *winning*, *win*. But we can also notice a mistake: in the list of positive words that have a high impact on the sentiment there is the term *right*, which is perceived as positive if we consider *right* as the opposite of *wrong*, but in these articles, this word is referred to the political tendency of the party. So it would be better to add this word to the stop words to be removed for the analysis.
+
+Among the words that have a higher negative impact there are words like *betray* and *sad*, but it is interesting that terms linked with the fascism appear more than once, like *fascism* itself and *fascist*.
+
+In the following graph you can have a zoom on the words that impacted the most on the positive and negative sentiment:
 
 ```{r, results='asis'}
 xxxxxxxx %>%
@@ -310,21 +319,18 @@ xxxxxxxx %>%
        y = NULL)
 ```
 
-ANALYSIS OF THE PREVIOUS GRAPH
+At this point I wanted to take the analysis a step further and see the specific emotions displayed in each text, going beyond the simple distinction between positive and negative. To do so, I used the package `transforEmotion`. This useful tool allowed me to compare the texts with the lexicon developed by Araque, Gatti, Staiano, and Guerini (2018), which assigns emotions to more than 175'000 words.
 
-INTRODUCTION OF THE PACKAGE TRANSFOREMOTION
-
-```{r, results='asis'}
+```{r}
 ref <- data("emotions")
 view(data)
 vector <- c(uni_BBC, uni_CNN, uni_Grd, uni_NYT)
 emotions <- emoxicon_scores(text = vector, lexicon = emotions)
 #Now I can see the emotions associated with each text
+view(emotions)
 ```
 
-ANALYZE THE EMOTION WITHIN EACH TEXT AND MAKE A COMPARISON
-
-TALK ABOUT SEMANTICA DISTANCE
+If we have a look at the data frame `emotions` we can notice that the emotion that are more present in the texts are inspiration, fear, angry and amusement.
 
 ```{r}
 data("neo_ipip_extraversion")
@@ -341,10 +347,22 @@ sematic_distance <- nlp_scores(
 )
 ```
 
-ANALYZE THE SEMANTICA DISTANCE OF EACH 
+ANALYZE THE SEMANTICA DISTANCE OF EACH
 
 ## CONCLUSION
 
+The results of this short analysis partially met my initial expectations. In fact, I thought the most prominent sentiment would have been negative. Yet, the results displayed a quite neutral sentiment, since the positive and negative words were almost balanced. Nevertheless, we must consider that most of the positive words were synonyms (*win*, *won*, *victory*, *winning*), and those terms cannot be avoided when you write an article about the results of the political campaigns. Instead, the negative words had a wider spectrum, and the only term that is repeated is *fascism*, which is a very negative image to associate to a political party in 2022.
+
+It is also important to remind that this sentiment analysis was word-based, so the results might have been different if we operated a sentence-based analysis, since it can happen that a positive word is preceded by a negation, making it a negative word.
+
 ## DIFFICULTIES
 
+I found this project very interesting because it gave me the opportunity to learn so much about sentiment analysis, which is a feature I think would be useful in the working world. This work was stimulating on many different levels, but there are some challenges that I did not manage to overcome.
+
+First, when I scraped the texts from the internet, they were split into many sentences and I wanted them to be a single text. I tried to unify them using a loop, but it did not work out, so I need to unify them one by one, which is neither elegant nor practical.
+
+Secondly, I wanted to create a Venn Diagram to display the most frequent words of each article, so that we could also see the overlaps. I tried to do so but at the end I discovered that with the package VennDiagram you can only display numbers and not words.
+
 ## REFERENCES
+
+J. Silge, D. Robinson, *"Text Mining with R: a Tidy Approach"*, O'Reilley, 1st edition

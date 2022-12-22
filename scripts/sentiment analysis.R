@@ -120,3 +120,6 @@ sematic_distance <- nlp_scores(
   keep_in_env = TRUE,
   envir = 1
 )
+#The code works but I have very little knowledge about the NLP and computational
+#linguistics so I'm not sure how to read the results. So, in order not to write
+#something wrong, I'm not putting it in the final report.

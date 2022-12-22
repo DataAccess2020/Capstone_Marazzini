@@ -2,7 +2,9 @@
 title: "Report Capstone Project"
 author: "Marazzini Matilde"
 date: "2022-12-20"
-output: html_document
+output:
+  pdf_document: default
+  html_document: default
 ---
 
 # The Victory of Giorgia Meloni described by foreign press - a sentiment analysis
@@ -337,23 +339,6 @@ view(emotions)
 ```
 
 If we have a look at the data frame `emotions` we can notice that the emotion that are more present in the texts are inspiration, fear, angry and amusement.
-
-```{r}
-data("neo_ipip_extraversion")
-sematic_distance <- nlp_scores(
-  text = vector,
-  classes = c(
-    "friendly", "gregarious", "assertive",
-    "active", "excitement", "cheerful"),
-  semantic_space = c("baroni", "cbow", "cbow_ukwac", "en100", "glove", "tasa"),
-  preprocess = TRUE,
-  remove_stop = TRUE,
-  keep_in_env = TRUE,
-  envir = 1
-)
-```
-
-ANALYZE THE SEMANTICA DISTANCE OF EACH
 
 ## CONCLUSION
 

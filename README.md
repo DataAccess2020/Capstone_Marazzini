@@ -15,5 +15,8 @@ The results partially met my initial expectation. In fact the analysis show a ne
 J. Silge, D. Robinson, "Text Mining with R: a Tidy Approach", O'Reilley, 1st edition
 
 ## Folders
-`scripts` with the scripts of the project. Must be opened in the following oreder: download_texts, most frequent words, sentiment analysis
+`scripts` with the scripts of the project. Must be opened in the following oreder: 
+ - download_texts
+ - most frequent words
+ - sentiment analysis
 `output` with the report

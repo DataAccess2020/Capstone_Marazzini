@@ -212,17 +212,23 @@ df_bbc %>%
   dplyr::filter(freq  >= 7 ) %>%
   ggplot(aes(x = word, y = freq)) +
   geom_col()
+```
 
+```{r, results='asis'}
 df_nyt %>% 
   dplyr::filter(freq  >= 7 ) %>%
   ggplot(aes(x = word, y = freq)) +
   geom_col()
+```
 
+```{r, results='asis'}
 df_cnn %>% 
   dplyr::filter(freq >= 7 ) %>%
   ggplot(aes(x = word, y = freq)) +
   geom_col()
+```
 
+```{r, results='asis'}
 df_grd %>% 
   dplyr::filter(freq >= 7 ) %>%
   ggplot(aes(x = word, y = freq)) +

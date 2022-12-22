@@ -19,4 +19,5 @@ J. Silge, D. Robinson, "Text Mining with R: a Tidy Approach", O'Reilley, 1st edi
  - download_texts
  - most frequent words
  - sentiment analysis
+ 
 `output` with the report

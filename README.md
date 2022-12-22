@@ -1,5 +1,5 @@
 # Capstone_Marazzini
-The following project aims at analyzing the sentiment of the articles published by the forign press about the victory of Giorgia Meloni at the Italian Election. The objective is to see how the foreing press depicts Fratelli Di Italia and its leader, formulating the hypothesis that the sentiment will be negative.
+The following project aims at analyzing the sentiment of the articles published by the forign press about the victory of Giorgia Meloni at the Italian Election. The goal is to see how the foreing press depicts Fratelli Di Italia and its leader, formulating the hypothesis that the sentiment will be negative.
 
 ## Tasks
 To accomplish this, here a list of the task needed:

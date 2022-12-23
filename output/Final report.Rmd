@@ -3,9 +3,11 @@ title: "Report Capstone Project"
 author: "Marazzini Matilde"
 date: "2022-12-20"
 output:
-  pdf_document: default
   html_document: default
+  pdf_document: default
 ---
+
+link repository: <https://github.com/DataAccess2020/Capstone_Marazzini> commits: 35
 
 # The Victory of Giorgia Meloni described by foreign press - a sentiment analysis
 
@@ -25,7 +27,7 @@ Sentiment analysis was conducted on a word-level, meaning that the texts were fr
 
 To achieve my goal, as first thing I needed to scrape the text of the articles from the web. So, I firstly checked the robots.txt on the websites and, as I saw that I could download the texts, I started to open all the packages I thought I would need for my report:
 
-```{r}
+```{r, results = 'hide'}
 #preparation
 library(tidyverse)
 library(rvest)
@@ -43,7 +45,7 @@ library(transforEmotion)
 
 Then, I proceeded with the download of the texts. Since the sentences were put in as different variables, I unified them in a unique text.
 
-```{r}
+```{r, results = 'hide'}
 #DOWNLOAD BBC
 x <- read_html("https://www.bbc.com/news/world-europe-63029909") %>%
   html_elements(css = ".eq5iqo00 , #main-heading")
@@ -91,7 +93,7 @@ view(uni_Grd)
 
 Then I created a data frame and a vector, so that for the next tasks of my project I would have them already ready to use:
 
-```{r}
+```{r, results = 'hide'}
 #create a dataframe
  dat <- data.frame(
   var1 = c("BBC", "NYT", "CNN", "Guardian"), 
@@ -108,7 +110,7 @@ vector <- c(uni_BBC, uni_CNN, uni_Grd, uni_NYT)
 
 To start to have an idea of the sentiment, it is good to have an insight of the most common words present in the texts. But before doing this, it is necessary to eliminate words that are frequent but have no meaning for the sentiment analysis, as the articles and the punctuation. So I used the package `tm` to eliminate these words and create a data frame with the frequency of the most common words.
 
-```{r}
+```{r, results = 'hide'}
 library(tm)
 docs <- Corpus(VectorSource(vector))
 
@@ -137,7 +139,7 @@ As we could expect, the most frequent words are all linked with the field of pol
 
 Then, I wanted to analyze the most frequent words inside each article to test if the journals had different approaches. To do so, I needed first to create a single data frame on a word level for each journal:
 
-```{r}
+```{r, results = 'hide'}
 #FREQUENCY BBC
 docs_bbc <- Corpus(VectorSource(BBC))
 
@@ -207,7 +209,7 @@ df_grd <- df_grd[!(df_grd$word=="“"),]
 df_grd
 ```
 
-At this point, to visualize the differences I created 4 bar charts for each journal, showing only the words that occur at least seven times:
+At this point, to visualize the differences I created 4 bar charts for each journal, showing only the words that occur at least seven times: BBC
 
 ```{r, results='asis'}
 df_bbc %>% 
@@ -216,6 +218,8 @@ df_bbc %>%
   geom_col()
 ```
 
+NYT
+
 ```{r, results='asis'}
 df_nyt %>% 
   dplyr::filter(freq  >= 7 ) %>%
@@ -223,12 +227,16 @@ df_nyt %>%
   geom_col()
 ```
 
+CNN
+
 ```{r, results='asis'}
 df_cnn %>% 
   dplyr::filter(freq >= 7 ) %>%
   ggplot(aes(x = word, y = freq)) +
   geom_col()
 ```
+
+THE GUARDIAN
 
 ```{r, results='asis'}
 df_grd %>% 
@@ -245,7 +253,7 @@ For the sentiment analysis I used overall two packages: `tidytext` and `transfor
 
 As first thing I wanted to understand if the general sentiment was positive or negative. To accomplish this, I had to choose the method and the vocabulary to evaluate the emotions present in the text. I chose the Bing Liu and collaborators corpus, which is already provided in the package `tidytext` and which assigns a positive or negative value for each word present in the dictionary.
 
-```{r}
+```{r, results = 'hide'}
 positive <- get_sentiments("bing") %>%
   filter(sentiment == "positive")
 
@@ -268,7 +276,7 @@ To get the negative and positive words, I first extrapolated from the Bing dicti
 
 To visually display the differences of the positive and negative words, i want to create a data frame also with the column "source" adding from which article the words come from:
 
-```{r}
+```{r, results = 'hide'}
 df_bbc$source <- ifelse(df_bbc$freq > 0, "BBC", df_bbc$source)
 df_cnn$source <- ifelse(df_cnn$freq > 0, "CNN", df_cnn$source)
 df_grd$source <- ifelse(df_grd$freq > 0, "GRD", df_grd$source)
@@ -285,7 +293,7 @@ complete_dat
 
 Then, I add the sentiment to each word:
 
-```{r}
+```{r, results = 'hide'}
 bing <- get_sentiments("bing")
 
 xxxxxxxx <- complete_dat %>%
